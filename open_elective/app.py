@@ -1,78 +1,57 @@
 import streamlit as st
 import pandas as pd
 
-# ---------------------------------------------------
-# PAGE CONFIG
-# ---------------------------------------------------
-
 st.set_page_config(
     page_title="Atlas Decision Engine",
-    page_icon="📊",
     layout="wide"
 )
 
-# ---------------------------------------------------
-# CUSTOM CSS
-# ---------------------------------------------------
+# ---------------- CSS ----------------
 
 st.markdown("""
 <style>
 
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-}
-
 .stApp {
-    background: linear-gradient(to right, #03101d, #041d33);
+    background: linear-gradient(to right, #03111f, #041f35);
     color: white;
 }
 
 .block-container {
-    padding-top: 1.5rem;
+    padding-top: 2rem;
     padding-left: 2rem;
     padding-right: 2rem;
 }
 
 .card {
-    background: rgba(15, 32, 52, 0.95);
-    border-radius: 22px;
+    background: #0f2236;
     padding: 24px;
+    border-radius: 20px;
     border: 1px solid rgba(255,255,255,0.06);
     margin-bottom: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.25);
 }
 
 .hero-title {
-    font-size: 78px;
-    line-height: 1;
+    font-size: 70px;
     font-weight: 800;
-    letter-spacing: -2px;
+    line-height: 1;
     color: white;
 }
 
 .hero-sub {
+    color: #9eb3c7;
     font-size: 18px;
-    color: #9fb2c8;
     margin-top: 20px;
 }
 
-.metric-big {
-    font-size: 44px;
-    font-weight: 700;
+.metric {
+    font-size: 38px;
+    font-weight: bold;
     color: white;
 }
 
-.metric-small {
+.small {
     color: #9fb2c8;
     font-size: 14px;
-}
-
-.section-title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    color: white;
 }
 
 .green {
@@ -80,107 +59,86 @@ html, body, [class*="css"] {
 }
 
 .tag {
-    display: inline-block;
-    background: #17364d;
-    color: #72ffd9;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    margin-right: 8px;
-    margin-top: 8px;
+    display:inline-block;
+    background:#17364d;
+    color:#63ffd8;
+    padding:6px 12px;
+    border-radius:999px;
+    margin-right:8px;
+    font-size:12px;
 }
 
-.progress-container {
-    width: 100%;
-    background: #23384d;
-    border-radius: 20px;
-    height: 10px;
-    margin-top: 12px;
-}
-
-.progress-bar {
-    background: #63ffd8;
-    height: 10px;
-    border-radius: 20px;
+.section-title {
+    font-size:32px;
+    font-weight:700;
+    margin-top:30px;
+    margin-bottom:15px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------------------------------------------
-# HERO SECTION
-# ---------------------------------------------------
+# ---------------- HERO ----------------
 
-left, right = st.columns([2.3, 1.2])
+left, right = st.columns([2.2,1])
 
 with left:
     st.markdown("""
-    <div class="card" style="padding:40px;">
-        <div class="green" style="font-weight:700; letter-spacing:2px;">
-            ATLAS DECISION ENGINE
-        </div>
+    <div class="card">
+        <div class="green"><b>ATLAS DECISION ENGINE</b></div>
 
         <div class="hero-title">
-            Make investment and operating choices with evidence, not intuition alone.
+        Make investment and operating choices with evidence, not intuition alone.
         </div>
 
         <div class="hero-sub">
-            A working prototype that combines weighted scoring,
-            risk controls, scenario planning, explainability,
-            governance, and exportable decision records.
+        A working prototype that combines weighted scoring,
+        risk controls, scenario planning, explainability,
+        governance, and exportable decision records.
         </div>
     </div>
     """, unsafe_allow_html=True)
 
 with right:
     st.markdown("""
-    <div class="card" style="height:260px;">
-        <div class="metric-small">Engine Health</div>
+    <div class="card">
+        <div class="small">Engine Health</div>
 
-        <div class="metric-big">
-            Ready
+        <div class="metric">
+        Ready
         </div>
 
-        <br>
-
-        <div class="metric-small">
-            Scoring rules loaded, sample portfolio synchronized,
-            governance checks active.
+        <div class="small">
+        Scoring rules loaded,
+        governance checks active.
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-# ---------------------------------------------------
-# TOP CARDS
-# ---------------------------------------------------
+# ---------------- KPI ----------------
 
-c1, c2, c3, c4 = st.columns(4)
+c1,c2,c3,c4 = st.columns(4)
 
-cards = [
+data = [
     ("Leading Option", "AI Forecast Copilot"),
     ("Approval Signal", "Approve"),
     ("Portfolio Average", "77.1/100"),
     ("Active Alerts", "0")
 ]
 
-for col, item in zip([c1, c2, c3, c4], cards):
+for col, item in zip([c1,c2,c3,c4], data):
 
     with col:
         st.markdown(f"""
         <div class="card">
-            <div class="metric-small">{item[0]}</div>
-
-            <br>
-
-            <div class="metric-big" style="font-size:28px;">
-                {item[1]}
+            <div class="small">{item[0]}</div>
+            <div class="metric" style="font-size:26px;">
+            {item[1]}
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-# ---------------------------------------------------
-# PORTFOLIO SECTION
-# ---------------------------------------------------
+# ---------------- PORTFOLIO ----------------
 
 st.markdown(
     '<div class="section-title">Portfolio View</div>',
@@ -188,34 +146,30 @@ st.markdown(
 )
 
 portfolio = [
-    ("AI Forecast Copilot", "82.3/100", "$10.6M"),
-    ("Support Automation Studio", "77.1/100", "$6.8M"),
-    ("Dynamic Pricing Optimizer", "76.2/100", "$17.2M"),
-    ("Supplier Risk Control Tower", "76.1/100", "$9.3M"),
-    ("Warehouse Automation", "75.5/100", "$7M")
+    ("AI Forecast Copilot","82.3/100","$10.6M"),
+    ("Support Automation Studio","77.1/100","$6.8M"),
+    ("Dynamic Pricing Optimizer","76.2/100","$17.2M"),
+    ("Supplier Risk Control Tower","76.1/100","$9.3M"),
+    ("Warehouse Automation","75.5/100","$7M")
 ]
 
 for name, score, value in portfolio:
 
-    st.markdown(f"""
+    html = f"""
     <div class="card">
 
         <div style="display:flex; justify-content:space-between;">
 
             <div>
                 <h3>{name}</h3>
-
-                <div class="metric-small">
-                    Enterprise initiative
-                </div>
+                <div class="small">Enterprise initiative</div>
             </div>
 
             <div style="text-align:right;">
-                <div class="metric-big" style="font-size:26px;">
+                <div class="metric" style="font-size:24px;">
                     {score}
                 </div>
-
-                <div class="metric-small">
+                <div class="small">
                     Composite score
                 </div>
             </div>
@@ -224,20 +178,20 @@ for name, score, value in portfolio:
 
         <br>
 
-        <div style="display:flex; gap:50px;">
+        <div style="display:flex; gap:40px;">
 
             <div>
-                <div class="metric-small">Expected Value</div>
+                <div class="small">Expected Value</div>
                 <h3>{value}</h3>
             </div>
 
             <div>
-                <div class="metric-small">Confidence</div>
+                <div class="small">Confidence</div>
                 <h3>76%</h3>
             </div>
 
             <div>
-                <div class="metric-small">Success Probability</div>
+                <div class="small">Success Probability</div>
                 <h3>76%</h3>
             </div>
 
@@ -245,54 +199,52 @@ for name, score, value in portfolio:
 
         <br>
 
-        <div class="tag">AI</div>
-        <div class="tag">Forecast</div>
-        <div class="tag">Automation</div>
+        <span class="tag">AI</span>
+        <span class="tag">Forecast</span>
+        <span class="tag">Automation</span>
 
     </div>
-    """, unsafe_allow_html=True)
+    """
 
-# ---------------------------------------------------
-# DECISION SUMMARY
-# ---------------------------------------------------
+    st.markdown(html, unsafe_allow_html=True)
+
+# ---------------- DECISION SUMMARY ----------------
 
 st.markdown(
     '<div class="section-title">Decision Summary</div>',
     unsafe_allow_html=True
 )
 
-r1, r2 = st.columns(2)
+l1,l2 = st.columns(2)
 
-with r1:
-
+with l1:
     st.markdown("""
     <div class="card">
 
         <div class="green">
-            Expansion aggressive
+        Expansion aggressive
         </div>
 
         <h2>AI Forecast Copilot</h2>
 
         <p style="color:#b9c6d4;">
-            AI Forecast Copilot leads because it combines strong
-            financial return with above-market strategic fit while
-            keeping downside manageable.
+        AI Forecast Copilot leads because it combines
+        strong financial return with strategic fit.
         </p>
 
-        <div class="metric-big">
-            Approve
+        <div class="metric">
+        Approve
         </div>
 
         <br>
 
-        <div class="tag">Financial Return</div>
-        <div class="tag">Strategic Fit</div>
+        <span class="tag">Financial Return</span>
+        <span class="tag">Strategic Fit</span>
 
     </div>
     """, unsafe_allow_html=True)
 
-with r2:
+with l2:
 
     drivers = [
         ("Financial Return", "24.4%"),
@@ -308,20 +260,31 @@ with r2:
         <div class="card">
 
             <div style="display:flex; justify-content:space-between;">
-                <h4>{title}</h4>
+                <b>{title}</b>
                 <div class="green">{value}</div>
             </div>
 
-            <div class="progress-container">
-                <div class="progress-bar" style="width:{value};"></div>
+            <div style="
+                width:100%;
+                height:10px;
+                background:#203447;
+                border-radius:20px;
+                margin-top:12px;
+            ">
+
+                <div style="
+                    width:{value};
+                    height:10px;
+                    background:#63ffd8;
+                    border-radius:20px;
+                "></div>
+
             </div>
 
         </div>
         """, unsafe_allow_html=True)
 
-# ---------------------------------------------------
-# SCENARIO ANALYSIS
-# ---------------------------------------------------
+# ---------------- TABLE ----------------
 
 st.markdown(
     '<div class="section-title">Scenario Analysis</div>',
@@ -336,51 +299,36 @@ df = pd.DataFrame({
         "Supplier Risk Control Tower",
         "Warehouse Automation"
     ],
-    "Base Case": [78.6, 74.7, 74.1, 73.7, 72.2],
-    "Expansion": [82.3, 77.8, 76.3, 76.3, 75.5],
-    "Downturn": [71.9, 69.2, 68.5, 70.3, 65.2],
-    "Disruption": [74.8, 70.8, 68.8, 73.1, 68.9]
+    "Base Case": [78.6,74.7,74.1,73.7,72.2],
+    "Expansion": [82.3,77.8,76.3,76.3,75.5],
+    "Downturn": [71.9,69.2,68.5,70.3,65.2]
 })
 
 st.dataframe(df, use_container_width=True)
 
-# ---------------------------------------------------
-# GOVERNANCE SECTION
-# ---------------------------------------------------
+# ---------------- GOVERNANCE ----------------
 
 st.markdown(
     '<div class="section-title">Governance & Risk Posture</div>',
     unsafe_allow_html=True
 )
 
-g1, g2, g3 = st.columns(3)
+g1,g2,g3 = st.columns(3)
 
 with g1:
     st.markdown("""
     <div class="card">
-
         <h3>Approval Path</h3>
 
-        <p>
-            Business sponsor → Finance → COO
-        </p>
-
-        <br>
+        <p>Business sponsor → Finance → COO</p>
 
         <h3>Guardrail Status</h3>
 
-        <p>
-            No hard blockers
-        </p>
-
-        <br>
+        <p>No hard blockers</p>
 
         <h3>Evidence Quality</h3>
 
-        <p>
-            Average confidence across portfolio: 75.8%
-        </p>
-
+        <p>Average portfolio confidence: 75.8%</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -408,14 +356,11 @@ with g3:
 
         <br>
 
-        <p>FY27 Growth Allocation Review recalculated</p>
+        <p>FY27 Growth Allocation recalculated</p>
 
     </div>
     """, unsafe_allow_html=True)
 
-# ---------------------------------------------------
-# FOOTER
-# ---------------------------------------------------
-
 st.markdown("---")
+
 st.caption("Atlas Decision Engine © 2026")
