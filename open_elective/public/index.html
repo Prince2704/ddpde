@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atlas Decision Engine</title>
+    <meta
+      name="description"
+      content="Professional prototype for a data-driven decision engine with scoring, scenarios, explainability, and governance."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell-background" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="grid-mask"></div>
+    </div>
+
+    <main class="app-shell">
+      <section class="hero panel">
+        <div class="hero-copy">
+          <span class="eyebrow">Atlas Decision Engine</span>
+          <h1>Make investment and operating choices with evidence, not intuition alone.</h1>
+          <p>
+            A working prototype that combines weighted scoring, risk controls, scenario planning,
+            explainability, governance, and exportable decision records.
+          </p>
+          <div class="hero-actions">
+            <button id="run-analysis" class="button button-primary">Run Analysis</button>
+            <button id="export-report" class="button button-secondary">Export Report</button>
+          </div>
+        </div>
+        <div class="hero-aside">
+          <div class="status-card">
+            <span class="status-label">Engine Health</span>
+            <strong id="engine-health">Ready</strong>
+            <p>Scoring rules loaded, sample portfolio synchronized, governance checks active.</p>
+          </div>
+          <div class="status-grid" id="snapshot-cards"></div>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <section class="panel form-panel">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Decision Brief</span>
+              <h2>Configure the evaluation</h2>
+            </div>
+            <span class="tag">Interactive input</span>
+          </div>
+
+          <form id="decision-form" class="decision-form">
+            <label>
+              Decision Name
+              <input name="decisionTitle" type="text" value="FY27 Growth Allocation Review" />
+            </label>
+
+            <label>
+              Objective
+              <textarea name="objective" rows="3">Prioritize the initiative with the best balance of ROI, speed, strategic fit, and controlled delivery risk.</textarea>
+            </label>
+
+            <div class="two-column">
+              <label>
+                Budget Cap (USD Mn)
+                <input name="budgetCap" type="number" value="12" min="1" max="100" step="1" />
+              </label>
+              <label>
+                Time Horizon (Months)
+                <input name="timeHorizon" type="number" value="18" min="3" max="48" step="1" />
+              </label>
+            </div>
+
+            <div class="two-column">
+              <label>
+                Risk Tolerance
+                <select name="riskTolerance">
+                  <option value="balanced" selected>Balanced</option>
+                  <option value="conservative">Conservative</option>
+                  <option value="aggressive">Aggressive</option>
+                </select>
+              </label>
+              <label>
+                Scenario
+                <select name="scenario">
+                  <option value="base" selected>Base Case</option>
+                  <option value="expansion">Expansion</option>
+                  <option value="downturn">Downturn</option>
+                  <option value="disruption">Disruption</option>
+                </select>
+              </label>
+            </div>
+
+            <fieldset class="weights-fieldset">
+              <legend>Decision Weights</legend>
+              <div class="weights-grid" id="weights-grid"></div>
+            </fieldset>
+
+            <div class="form-footer">
+              <button type="submit" class="button button-primary">Recalculate</button>
+              <p>Weights auto-normalize, hard guardrails stay enforced, and the audit record updates each run.</p>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel portfolio-panel">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Portfolio View</span>
+              <h2>Candidate initiatives</h2>
+            </div>
+            <span class="tag">Score-ranked</span>
+          </div>
+          <div id="portfolio-list" class="portfolio-list"></div>
+        </section>
+      </section>
+
+      <section class="analytics-grid">
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Recommendation</span>
+              <h2>Decision summary</h2>
+            </div>
+            <span class="tag">Executive ready</span>
+          </div>
+          <div id="decision-summary" class="decision-summary"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Sensitivity</span>
+              <h2>Top score drivers</h2>
+            </div>
+            <span class="tag">Explainability</span>
+          </div>
+          <div id="drivers-chart" class="drivers-chart"></div>
+        </section>
+
+        <section class="panel wide-panel">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Scenario Analysis</span>
+              <h2>How the ranking shifts under pressure</h2>
+            </div>
+            <span class="tag">Stress testing</span>
+          </div>
+          <div id="scenario-table" class="scenario-table"></div>
+        </section>
+      </section>
+
+      <section class="governance-grid">
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Controls</span>
+              <h2>Governance and risk posture</h2>
+            </div>
+            <span class="tag">Professional safeguards</span>
+          </div>
+          <div id="governance-panel" class="governance-panel"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Monitoring</span>
+              <h2>Signals to watch after approval</h2>
+            </div>
+            <span class="tag">Operational follow-through</span>
+          </div>
+          <div id="monitoring-panel" class="monitoring-panel"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Audit Trail</span>
+              <h2>Recent analysis events</h2>
+            </div>
+            <span class="tag">Traceable</span>
+          </div>
+          <div id="audit-panel" class="audit-panel"></div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
