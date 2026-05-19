@@ -1,18 +1,9 @@
 import json
 import os
-from http import HTTPStatus
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from pathlib import Path
-from urllib.parse import unquote, urlparse
-
-
-ROOT_DIR = Path(__file__).resolve().parent
-PUBLIC_DIR = ROOT_DIR / "public"
-PORT = int(os.environ.get("PORT", "3000"))
-
-
-class AppHandler(BaseHTTPRequestHandler):
-    server_version = "AtlasDecisionEngine/1.0"
+import streamlit as st
+st.set_page_config(page_title="Atlas Decision Engine")
+st.title("Atlas Decision Engine")
+st.write("Deployment Seccesful")
 
     def do_GET(self):
         parsed = urlparse(self.path)
@@ -82,17 +73,6 @@ class AppHandler(BaseHTTPRequestHandler):
         }.get(suffix, "application/octet-stream")
 
 
-def run():
-    server = ThreadingHTTPServer(("127.0.0.1", PORT), AppHandler)
-    print(f"Atlas Decision Engine running on http://127.0.0.1:{PORT}")
-
-    try:
-        server.serve_forever()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        server.server_close()
 
 
-if __name__ == "__main__":
-    run()
+    
